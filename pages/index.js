@@ -9,12 +9,12 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div class="h-[5vh]"></div>
+      <div className="h-[5vh]"></div>
       <Landing2 />
       <Feature />
       <Landing />
       <About />
-      <div class="h-[5vh]"></div>
+      <div className="h-[5vh]"></div>
       <Footer />
     </>
   );
