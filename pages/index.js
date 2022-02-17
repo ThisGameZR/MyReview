@@ -1,7 +1,21 @@
+import Navbar from "../layouts/Navbar";
+import Footer from "../layouts/Footer";
+import Feature from "../components/home/Feature";
+import Landing from "../components/home/Landing";
+import Landing2 from "../components/home/Landing2";
+import About from "../components/home/About";
+
 export default function Home() {
-    return (
-        <div>
-            <h1 className="text-green-700 text-3xl">Clean code!</h1>
-        </div>
-    );
+  return (
+    <>
+      <Navbar />
+      <div class="h-[5vh]"></div>
+      <Landing2 />
+      <Feature />
+      <Landing />
+      <About />
+      <div class="h-[5vh]"></div>
+      <Footer />
+    </>
+  );
 }

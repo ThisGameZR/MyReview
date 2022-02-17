@@ -13,7 +13,7 @@ model course {
   description String?     @db.VarChar(255)
   userId      Int
   createdAt   DateTime    @db.DateTime(0)
-  user        user        @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_course_user1")
+  user        user        @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_course_user1")
   objective   objective[]
   post        post[]
 
@@ -25,7 +25,7 @@ model kyc {
   card           String @db.VarChar(255)
   selfieWithCard String @db.VarChar(255)
   userId         Int
-  user           user   @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_kyc_user1")
+  user           user   @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_kyc_user1")
 
   @@index([userId], map: "fk_kyc_user1_idx")
 }
@@ -36,8 +36,8 @@ model message {
   receiverId                    Int
   message                       String   @db.VarChar(255)
   createdAt                     DateTime @db.DateTime(0)
-  user_message_receiverIdTouser user     @relation("message_receiverIdTouser", fields: [receiverId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_message_user2")
-  user_message_senderIdTouser   user     @relation("message_senderIdTouser", fields: [senderId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_message_user1")
+  user_message_receiverIdTouser user     @relation("message_receiverIdTouser", fields: [receiverId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_message_user2")
+  user_message_senderIdTouser   user     @relation("message_senderIdTouser", fields: [senderId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_message_user1")
 
   @@index([senderId], map: "fk_message_user1_idx")
   @@index([receiverId], map: "fk_message_user2_idx")
@@ -47,7 +47,7 @@ model objective {
   objectiveId Int     @id @default(autoincrement())
   text        String? @db.VarChar(255)
   courseId    Int
-  course      course  @relation(fields: [courseId], references: [courseId], onDelete: NoAction, onUpdate: NoAction, map: "fk_objective_course1")
+  course      course  @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade, map: "fk_objective_course1")
 
   @@index([courseId], map: "fk_objective_course1_idx")
 }
@@ -59,9 +59,9 @@ model post {
   courseId  Int?
   userId    Int
   createdAt DateTime    @db.DateTime(0)
-  course    course?     @relation(fields: [courseId], references: [courseId], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_course1")
-  thread    thread?     @relation(fields: [threadId], references: [threadId], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_thread1")
-  user      user        @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_user1")
+  course    course?     @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade, map: "fk_post_course1")
+  thread    thread?     @relation(fields: [threadId], references: [threadId], onDelete: Cascade, onUpdate: Cascade, map: "fk_post_thread1")
+  user      user        @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_post_user1")
   postimage postimage[]
 
   @@index([courseId], map: "fk_post_course1_idx")
@@ -73,7 +73,7 @@ model postimage {
   postImageId Int    @id @default(autoincrement())
   postId      Int
   path        String @db.VarChar(255)
-  post        post   @relation(fields: [postId], references: [postId], onDelete: NoAction, onUpdate: NoAction, map: "fk_postImage_post1")
+  post        post   @relation(fields: [postId], references: [postId], onDelete: Cascade, onUpdate: Cascade, map: "fk_postImage_post1")
 
   @@index([postId], map: "fk_postImage_post1_idx")
 }
@@ -87,7 +87,7 @@ model tag {
   tagId    Int     @id @default(autoincrement())
   threadId Int
   name     String? @db.VarChar(45)
-  thread   thread  @relation(fields: [threadId], references: [threadId], onDelete: NoAction, onUpdate: NoAction, map: "fk_tag_thread1")
+  thread   thread  @relation(fields: [threadId], references: [threadId], onDelete: Cascade, onUpdate: Cascade, map: "fk_tag_thread1")
 
   @@index([threadId], map: "fk_tag_thread1_idx")
 }
@@ -97,7 +97,7 @@ model thread {
   title     String?  @db.VarChar(255)
   createdAt DateTime @db.DateTime(0)
   userId    Int
-  user      user     @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_thread_user1")
+  user      user     @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_thread_user1")
   post      post[]
   tag       tag[]
 
@@ -126,8 +126,8 @@ model user {
   verify                           String         @db.VarChar(5)
   kycVerify                        String         @db.VarChar(5)
   roleName                         String         @db.VarChar(45)
-  role                             role           @relation(fields: [roleName], references: [name], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_role1")
-  university                       university?    @relation(fields: [universityId], references: [universityId], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_university")
+  role                             role           @relation(fields: [roleName], references: [name], onDelete: Cascade, onUpdate: Cascade, map: "fk_user_role1")
+  university                       university?    @relation(fields: [universityId], references: [universityId], onDelete: Cascade, onUpdate: Cascade, map: "fk_user_university")
   course                           course[]
   kyc                              kyc[]
   message_message_receiverIdTouser message[]      @relation("message_receiverIdTouser")
@@ -145,7 +145,7 @@ model verification {
   token          String   @db.VarChar(255)
   createdAt      DateTime @db.DateTime(0)
   userId         Int
-  user           user     @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_verification_user1")
+  user           user     @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_verification_user1")
 
   @@index([userId], map: "fk_verification_user1_idx")
 }
