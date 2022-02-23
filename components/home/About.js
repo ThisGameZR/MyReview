@@ -4,25 +4,25 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <section class="bg-white">
-      <div class="container max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-        <div class="items-center lg:grid grid-cols-2">
-          <div class="">
-            <h2 class="text-3xl font-bold text-gray-800">Who Developed the website</h2>
+    <section className="bg-white">
+      <div className="container max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+        <div className="items-center lg:grid grid-cols-2">
+          <div className="">
+            <h2 className="text-3xl font-bold text-gray-800">Who Developed the website</h2>
 
-            <p class="mt-4 text-gray-500  lg:max-w-md">
-              Hi I'm ThisGameZ, I'm a software engineering student 😁{" "}
-              <a class="font-bold text-blue-600 " href="#">
+            <p className="mt-4 text-gray-500  lg:max-w-md">
+              Hi I&apos;m ThisGameZ, I&apos;m a software engineering student 😁{" "}
+              <a className="font-bold text-blue-600 " href="#">
                 @Chiang Mai University
               </a>{" "}
               , Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum in sed non alias, fugiat, commodi nemo ut fugit corrupti dolorem sequi
               ex veniam consequuntur id, maiores beatae ipsa omnis aliquam?
             </p>
 
-            <div class="flex items-center mt-6 -mx-2">
-              <a class="mx-2" href="#" aria-label="Twitter">
+            <div className="flex items-center mt-6 -mx-2">
+              <a className="mx-2" href="#" aria-label="Twitter">
                 <svg
-                  class="w-5 h-5 text-gray-700 fill-current  hover:text-gray-600 dark:hover:text-gray-400"
+                  className="w-5 h-5 text-gray-700 fill-current  hover:text-gray-600 dark:hover:text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
                 >
@@ -30,9 +30,9 @@ export default function About() {
                 </svg>
               </a>
 
-              <a class="mx-2" href="#" aria-label="Facebook">
+              <a className="mx-2" href="#" aria-label="Facebook">
                 <svg
-                  class="w-5 h-5 text-gray-700 fill-current  hover:text-gray-600 dark:hover:text-gray-400"
+                  className="w-5 h-5 text-gray-700 fill-current  hover:text-gray-600 dark:hover:text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
                 >
@@ -40,9 +40,9 @@ export default function About() {
                 </svg>
               </a>
 
-              <a class="mx-2" href="#" aria-label="Linkden">
+              <a className="mx-2" href="#" aria-label="Linkden">
                 <svg
-                  class="w-5 h-5 text-gray-700 fill-current  hover:text-gray-600 dark:hover:text-gray-400"
+                  className="w-5 h-5 text-gray-700 fill-current  hover:text-gray-600 dark:hover:text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
                 >
@@ -50,9 +50,9 @@ export default function About() {
                 </svg>
               </a>
 
-              <a class="mx-2" href="#" aria-label="Github">
+              <a className="mx-2" href="#" aria-label="Github">
                 <svg
-                  class="w-5 h-5 text-gray-700 fill-current  hover:text-gray-600 dark:hover:text-gray-400"
+                  className="w-5 h-5 text-gray-700 fill-current  hover:text-gray-600 dark:hover:text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
                 >
@@ -62,7 +62,7 @@ export default function About() {
             </div>
           </div>
 
-          <div class="mt-8 lg:mt-0 relative hidden lg:block w-[100%] h-[100%]">
+          <div className="mt-8 lg:mt-0 relative hidden lg:block w-[100%] h-[100%]">
             <Image src="/images/cmu.jpg" layout="fill" />
           </div>
         </div>
