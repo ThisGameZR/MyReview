@@ -1,6 +1,7 @@
 import { LockClosedIcon } from "@heroicons/react/solid";
 import Navbar from "../../layouts/Navbar";
 import Footer from "../../layouts/Footer";
+import Image from "next/image";
 
 export default function Register() {
   return (
@@ -10,7 +11,7 @@ export default function Register() {
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <img className="mx-auto h-12 w-auto" src="/images/logo-transparent.png" alt="Workflow" />
+            <Image className="mx-auto h-12 w-auto" src="/images/logo-transparent.png" alt="Workflow" />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Register Account</h2>
           </div>
           <form className="mt-8 space-y-6" action="#" method="POST">
