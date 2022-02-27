@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../layouts/Navbar";
 import Select from "../../components/util/Select";
-import Card from "../../components/util/Card";
+import CourseCard from "../../components/util/CourseCard";
 
 export default function Index() {
   const universityList = [
@@ -122,7 +122,7 @@ export default function Index() {
         <div className="flex flex-col w-full ">
           {/* Search div */}
           <div className="flex flex-row w-full bg-slate-50 border-b-black border-b border-solid justify-center">
-            <div className="flex flex-col px-4 py-2 gap-2 lg:py-4 lg:grid lg:grid-cols-[20%_20%_20%_40%] w-full lg:w-[60%] lg:gap-8 xl:grid-cols-[20%_20%_15%_35%]">
+            <div className="flex flex-col px-4 py-2 gap-2 lg:py-4 lg:grid lg:grid-cols-[20%_20%_20%_35%] w-[95%] xl:w-[80%] xl:gap-6 xl:grid-cols-[20%_20%_15%_35%]">
               <div className="">
                 <Select list={universityList} selected={selectedUniversity} setSelected={setSelectedUniversity} />
               </div>
@@ -145,7 +145,7 @@ export default function Index() {
           <div className="container mx-auto">
             <div className="flex flex-wrap -mx-4">
               {courses.map((course) => (
-                <Card key={course.courseId} prop={course} />
+                <CourseCard key={course.courseId} prop={course} />
               ))}
             </div>
           </div>

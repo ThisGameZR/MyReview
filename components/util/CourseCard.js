@@ -1,8 +1,6 @@
 import React from "react";
 
 export default function Card({ prop }) {
-  //if prop.date is not older than this month
-
   const highlight =
     prop.point >= 4
       ? "bg-orange-200 text-orange-800 "
