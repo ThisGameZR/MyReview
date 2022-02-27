@@ -3,20 +3,23 @@ import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
 
 import Head from "next/head";
-
-const navigation = [
-  { name: "Dashboard", href: "/", current: true },
-  { name: "Course", href: "/course", current: false },
-  { name: "Forum", href: "/forum", current: false },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
+  let { t } = useTranslation();
+
+  const navigation = [
+    { name: t("common:dashboard"), href: "/", current: true },
+    { name: t("common:course"), href: "/course", current: false },
+    { name: t("common:forum"), href: "/forum", current: false },
+  ];
+
   const [user, setUser] = useState({});
 
   const router = useRouter();
@@ -128,7 +131,7 @@ export default function Navbar() {
                           " px-4 py-1 rounded font-bold mr-4  hover:bg-slate-100"
                         )}
                       >
-                        Sign Up
+                        {t("common:signup")}
                       </a>
                       <a
                         href="/auth/login"
@@ -137,7 +140,7 @@ export default function Navbar() {
                           " px-4 py-1 rounded font-bold mr-4 hover:bg-slate-100"
                         )}
                       >
-                        Sign In
+                        {t("common:signin")}
                       </a>
                     </div>
                   )}
@@ -170,7 +173,7 @@ export default function Navbar() {
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                 >
-                  Sign Up
+                  {t("common:signup")}
                 </Disclosure.Button>
                 <Disclosure.Button
                   key={"Sign In"}
@@ -181,7 +184,7 @@ export default function Navbar() {
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                 >
-                  Sign In
+                  {t("common:signin")}
                 </Disclosure.Button>
               </div>
             </Disclosure.Panel>

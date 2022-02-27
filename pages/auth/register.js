@@ -1,9 +1,23 @@
+import React, { useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import Navbar from "../../layouts/Navbar";
 import Footer from "../../layouts/Footer";
-import Image from "next/image";
+import Select from "../../components/util/Select";
 
 export default function Register() {
+  const emailAddressList = [
+    {
+      id: 1,
+      value: ".ac.",
+    },
+    {
+      id: 2,
+      value: ".edu.",
+    },
+  ];
+
+  const [selectedEmailAddressList, setSelectedEmailAddressList] = useState(emailAddressList[0]);
+
   return (
     <>
       <Navbar></Navbar>
@@ -22,8 +36,9 @@ export default function Register() {
                 </label>
                 <input
                   id="email-address"
-                  name="email"
-                  type="email"
+                  name="displayName"
+                  type="text"
+                  autoComplete="off"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Display Name"
@@ -33,14 +48,27 @@ export default function Register() {
                 <label htmlFor="email-address" className="sr-only">
                   Email address
                 </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  required
-                  className="mb-4 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email"
-                />
+                <div className="grid grid-cols-[50%_30%_20%]">
+                  <input
+                    id="email-address"
+                    autoComplete="off"
+                    name="email"
+                    type="text"
+                    required
+                    className="mb-4 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    placeholder="Email Address"
+                  />
+                  <Select list={emailAddressList} selected={selectedEmailAddressList} setSelected={setSelectedEmailAddressList} />
+                  <input
+                    id="email-address"
+                    autoComplete="off"
+                    name="email"
+                    type="text"
+                    required
+                    className="mb-4 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    placeholder="Suffix"
+                  />
+                </div>
               </div>
               <div className="">
                 <label htmlFor="password" className="sr-only">

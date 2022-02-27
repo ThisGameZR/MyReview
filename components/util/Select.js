@@ -25,7 +25,7 @@ export default function Select({ list, selected, setSelected }) {
 
             <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
               <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                {list.map((element) => (
+                {list?.map((element) => (
                   <Listbox.Option
                     key={element.id}
                     className={({ active }) =>
