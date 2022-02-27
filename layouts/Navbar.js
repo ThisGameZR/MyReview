@@ -2,13 +2,14 @@
 import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { useRouter } from "next/router";
 
 import Head from "next/head";
 
 const navigation = [
   { name: "Dashboard", href: "/", current: true },
-  { name: "Course", href: "#", current: false },
-  { name: "Forum", href: "#", current: false },
+  { name: "Course", href: "/course", current: false },
+  { name: "Forum", href: "/forum", current: false },
 ];
 
 function classNames(...classes) {
@@ -17,6 +18,16 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [user, setUser] = useState({});
+
+  const router = useRouter();
+  navigation.forEach((element) => {
+    if (element.href === router.pathname) {
+      element.current = true;
+    } else {
+      element.current = false;
+    }
+  });
+
   return (
     <>
       <Head>
@@ -47,7 +58,7 @@ export default function Navbar() {
                           key={item.name}
                           href={item.href}
                           className={classNames(
-                            item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            item.current ? "bg-blue-800 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white",
                             "px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
                           )}
                           aria-current={item.current ? "page" : undefined}
@@ -58,66 +69,79 @@ export default function Navbar() {
                     </div>
                   </div>
                 </div>
-                {user == {} ? (
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <button
-                      type="button"
-                      className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-
-                    {/* Profile dropdown */}
-                    <Menu as="div" className="ml-3 relative">
-                      <div>
-                        <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                          <span className="sr-only">Open user menu</span>
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
-                          />
-                        </Menu.Button>
-                      </div>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
+                <span className="hidden sm:block">
+                  {user == {} ? (
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                      <button
+                        type="button"
+                        className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                       >
-                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a href="#" className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}>
-                                Your Profile
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a href="#" className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}>
-                                Sign out
-                              </a>
-                            )}
-                          </Menu.Item>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  </div>
-                ) : (
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 text-sm">
-                    <a href="/auth/register" className="bg-white px-4 py-1 rounded font-bold mr-4 text-gray-700 hover:bg-slate-100">
-                      Sign Up
-                    </a>
-                    <a href="/auth/login" className="bg-white px-4 py-1 rounded font-bold text-gray-700 hover:bg-slate-100">
-                      Sign In
-                    </a>
-                  </div>
-                )}
+                        <span className="sr-only">View notifications</span>
+                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
+                      {/* Profile dropdown */}
+                      <Menu as="div" className="ml-3 relative">
+                        <div>
+                          <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                            <span className="sr-only">Open user menu</span>
+                            <img
+                              className="h-8 w-8 rounded-full"
+                              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                              alt=""
+                            />
+                          </Menu.Button>
+                        </div>
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a href="#" className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}>
+                                  Your Profile
+                                </a>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a href="#" className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}>
+                                  Sign out
+                                </a>
+                              )}
+                            </Menu.Item>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    </div>
+                  ) : (
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 text-sm">
+                      <a
+                        href="/auth/register"
+                        className={classNames(
+                          router.pathname == "/auth/register" ? "bg-blue-800 text-white" : "bg-white text-gray-700",
+                          " px-4 py-1 rounded font-bold mr-4  hover:bg-slate-100"
+                        )}
+                      >
+                        Sign Up
+                      </a>
+                      <a
+                        href="/auth/login"
+                        className={classNames(
+                          router.pathname == "/auth/login" ? "bg-blue-800 text-white" : "bg-white text-gray-700",
+                          " px-4 py-1 rounded font-bold mr-4 hover:bg-slate-100"
+                        )}
+                      >
+                        Sign In
+                      </a>
+                    </div>
+                  )}
+                </span>
               </div>
             </div>
 
@@ -129,7 +153,7 @@ export default function Navbar() {
                     as="a"
                     href={item.href}
                     className={classNames(
-                      item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      item.current ? "bg-blue-800 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white",
                       "block px-3 py-2 rounded-md text-base font-medium"
                     )}
                     aria-current={item.current ? "page" : undefined}
@@ -137,6 +161,28 @@ export default function Navbar() {
                     {item.name}
                   </Disclosure.Button>
                 ))}
+                <Disclosure.Button
+                  key={"Sign Up"}
+                  as="a"
+                  href="/auth/register"
+                  className={classNames(
+                    router.pathname == "/auth/register" ? "bg-blue-800 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block px-3 py-2 rounded-md text-base font-medium"
+                  )}
+                >
+                  Sign Up
+                </Disclosure.Button>
+                <Disclosure.Button
+                  key={"Sign In"}
+                  as="a"
+                  href="/auth/login"
+                  className={classNames(
+                    router.pathname == "/auth/login" ? "bg-blue-800 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block px-3 py-2 rounded-md text-base font-medium"
+                  )}
+                >
+                  Sign In
+                </Disclosure.Button>
               </div>
             </Disclosure.Panel>
           </>

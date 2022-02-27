@@ -1,8 +1,18 @@
 -- CreateTable
+CREATE TABLE `comments` (
+    `user_userId` INTEGER NOT NULL,
+    `post_postId` INTEGER NOT NULL,
+    `text` VARCHAR(1000) NULL,
+
+    INDEX `fk_comments_post1_idx`(`post_postId`),
+    INDEX `fk_comments_user1_idx`(`user_userId`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `course` (
     `courseId` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NULL,
-    `description` VARCHAR(255) NULL,
+    `description` VARCHAR(1000) NULL,
     `userId` INTEGER NOT NULL,
     `createdAt` DATETIME(0) NOT NULL,
 
@@ -26,7 +36,7 @@ CREATE TABLE `message` (
     `messageId` INTEGER NOT NULL AUTO_INCREMENT,
     `senderId` INTEGER NOT NULL,
     `receiverId` INTEGER NOT NULL,
-    `message` VARCHAR(255) NOT NULL,
+    `message` VARCHAR(1000) NOT NULL,
     `createdAt` DATETIME(0) NOT NULL,
 
     INDEX `fk_message_user1_idx`(`senderId`),
@@ -37,7 +47,7 @@ CREATE TABLE `message` (
 -- CreateTable
 CREATE TABLE `objective` (
     `objectiveId` INTEGER NOT NULL AUTO_INCREMENT,
-    `text` VARCHAR(255) NULL,
+    `text` VARCHAR(1000) NULL,
     `courseId` INTEGER NOT NULL,
 
     INDEX `fk_objective_course1_idx`(`courseId`),
@@ -47,7 +57,7 @@ CREATE TABLE `objective` (
 -- CreateTable
 CREATE TABLE `post` (
     `postId` INTEGER NOT NULL AUTO_INCREMENT,
-    `content` TEXT NULL,
+    `content` VARCHAR(1000) NULL,
     `threadId` INTEGER NULL,
     `courseId` INTEGER NULL,
     `userId` INTEGER NOT NULL,
@@ -67,6 +77,26 @@ CREATE TABLE `postimage` (
 
     INDEX `fk_postImage_post1_idx`(`postId`),
     PRIMARY KEY (`postImageId`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `postpoint` (
+    `postId` INTEGER NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `point` INTEGER NOT NULL DEFAULT 0,
+
+    INDEX `fk_postPoint_post_idx`(`postId`),
+    INDEX `fk_postPoint_user1_idx`(`userId`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `report` (
+    `postId` INTEGER NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `text` VARCHAR(1000) NULL,
+
+    INDEX `fk_report_post1_idx`(`postId`),
+    INDEX `fk_report_user1_idx`(`userId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -142,6 +172,12 @@ CREATE TABLE `verification` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
+ALTER TABLE `comments` ADD CONSTRAINT `fk_comments_post1` FOREIGN KEY (`post_postId`) REFERENCES `post`(`postId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE `comments` ADD CONSTRAINT `fk_comments_user1` FOREIGN KEY (`user_userId`) REFERENCES `user`(`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
 ALTER TABLE `course` ADD CONSTRAINT `fk_course_user1` FOREIGN KEY (`userId`) REFERENCES `user`(`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
@@ -167,6 +203,18 @@ ALTER TABLE `post` ADD CONSTRAINT `fk_post_user1` FOREIGN KEY (`userId`) REFEREN
 
 -- AddForeignKey
 ALTER TABLE `postimage` ADD CONSTRAINT `fk_postImage_post1` FOREIGN KEY (`postId`) REFERENCES `post`(`postId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE `postpoint` ADD CONSTRAINT `fk_postPoint_post` FOREIGN KEY (`postId`) REFERENCES `post`(`postId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE `postpoint` ADD CONSTRAINT `fk_postPoint_user1` FOREIGN KEY (`userId`) REFERENCES `user`(`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE `report` ADD CONSTRAINT `fk_report_post1` FOREIGN KEY (`postId`) REFERENCES `post`(`postId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE `report` ADD CONSTRAINT `fk_report_user1` FOREIGN KEY (`userId`) REFERENCES `user`(`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE `tag` ADD CONSTRAINT `fk_tag_thread1` FOREIGN KEY (`threadId`) REFERENCES `thread`(`threadId`) ON DELETE NO ACTION ON UPDATE NO ACTION;

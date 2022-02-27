@@ -7,17 +7,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model course {
-  courseId    Int         @id @default(autoincrement())
-  name        String?     @db.VarChar(255)
-  description String?     @db.VarChar(255)
-  userId      Int
-  createdAt   DateTime    @db.DateTime(0)
-  user        user        @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_course_user1")
-  objective   objective[]
-  post        post[]
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model comments {
+  user_userId Int
+  post_postId Int
+  text        String? @db.VarChar(1000)
+  post        post    @relation(fields: [post_postId], references: [postId], onDelete: NoAction, onUpdate: NoAction, map: "fk_comments_post1")
+  user        user    @relation(fields: [user_userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_comments_user1")
 
+  @@index([post_postId], map: "fk_comments_post1_idx")
+  @@index([user_userId], map: "fk_comments_user1_idx")
+  @@ignore
+}
+
+model category {
+  categoryId Int      @id @default(autoincrement())
+  name       String?  @db.VarChar(255)
+  createdAt  DateTime @db.DateTime(0)
+  course     course[]
+}
+
+model course {
+  courseId     Int         @id @default(autoincrement())
+  name         String?     @db.VarChar(255)
+  description  String?     @db.VarChar(1000)
+  userId       Int
+  categoryId   Int
+  universityId Int
+  createdAt    DateTime    @db.DateTime(0)
+  user         user        @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_course_user1")
+  category     category    @relation(fields: [categoryId], references: [categoryId], onDelete: NoAction, onUpdate: NoAction, map: "fk_course_category1")
+  university   university  @relation(fields: [universityId], references: [universityId], onDelete: NoAction, onUpdate: NoAction, map: "fk_course_university1")
+  objective    objective[]
+  post         post[]
+
+  coursepoint coursepoint[] @ignore
+  @@index([courseId], map: "fk_course_category1_idx")
   @@index([userId], map: "fk_course_user1_idx")
+  @@index([universityId], map: "fk_course_university1_idx")
+}
+
+model coursepoint {
+  courseId Int
+  userId   Int
+  point    Int    @default(0)
+  course   course @relation(fields: [courseId], references: [courseId], onDelete: NoAction, onUpdate: NoAction, map: "fk_coursepoint_course1")
+  user     user   @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_coursepoint_user1")
+
+  @@index([courseId], map: "fk_coursepoint_course1_idx")
+  @@index([userId], map: "fk_coursepoint_user1_idx")
+  @@ignore
 }
 
 model kyc {
@@ -25,7 +64,7 @@ model kyc {
   card           String @db.VarChar(255)
   selfieWithCard String @db.VarChar(255)
   userId         Int
-  user           user   @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_kyc_user1")
+  user           user   @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_kyc_user1")
 
   @@index([userId], map: "fk_kyc_user1_idx")
 }
@@ -34,10 +73,10 @@ model message {
   messageId                     Int      @id @default(autoincrement())
   senderId                      Int
   receiverId                    Int
-  message                       String   @db.VarChar(255)
+  message                       String   @db.VarChar(1000)
   createdAt                     DateTime @db.DateTime(0)
-  user_message_receiverIdTouser user     @relation("message_receiverIdTouser", fields: [receiverId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_message_user2")
-  user_message_senderIdTouser   user     @relation("message_senderIdTouser", fields: [senderId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_message_user1")
+  user_message_receiverIdTouser user     @relation("message_receiverIdTouser", fields: [receiverId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_message_user2")
+  user_message_senderIdTouser   user     @relation("message_senderIdTouser", fields: [senderId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_message_user1")
 
   @@index([senderId], map: "fk_message_user1_idx")
   @@index([receiverId], map: "fk_message_user2_idx")
@@ -45,24 +84,27 @@ model message {
 
 model objective {
   objectiveId Int     @id @default(autoincrement())
-  text        String? @db.VarChar(255)
+  text        String? @db.VarChar(1000)
   courseId    Int
-  course      course  @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade, map: "fk_objective_course1")
+  course      course  @relation(fields: [courseId], references: [courseId], onDelete: NoAction, onUpdate: NoAction, map: "fk_objective_course1")
 
   @@index([courseId], map: "fk_objective_course1_idx")
 }
 
 model post {
   postId    Int         @id @default(autoincrement())
-  content   String?     @db.Text
+  content   String?     @db.VarChar(1000)
   threadId  Int?
   courseId  Int?
   userId    Int
   createdAt DateTime    @db.DateTime(0)
-  course    course?     @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade, map: "fk_post_course1")
-  thread    thread?     @relation(fields: [threadId], references: [threadId], onDelete: Cascade, onUpdate: Cascade, map: "fk_post_thread1")
-  user      user        @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_post_user1")
+  course    course?     @relation(fields: [courseId], references: [courseId], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_course1")
+  thread    thread?     @relation(fields: [threadId], references: [threadId], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_thread1")
+  user      user        @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_user1")
+  comments  comments[]  @ignore
   postimage postimage[]
+  postpoint postpoint[] @ignore
+  report    report[]    @ignore
 
   @@index([courseId], map: "fk_post_course1_idx")
   @@index([threadId], map: "fk_post_thread1_idx")
@@ -73,9 +115,35 @@ model postimage {
   postImageId Int    @id @default(autoincrement())
   postId      Int
   path        String @db.VarChar(255)
-  post        post   @relation(fields: [postId], references: [postId], onDelete: Cascade, onUpdate: Cascade, map: "fk_postImage_post1")
+  post        post   @relation(fields: [postId], references: [postId], onDelete: NoAction, onUpdate: NoAction, map: "fk_postImage_post1")
 
   @@index([postId], map: "fk_postImage_post1_idx")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model postpoint {
+  postId Int
+  userId Int
+  point  Int  @default(0)
+  post   post @relation(fields: [postId], references: [postId], onDelete: NoAction, onUpdate: NoAction, map: "fk_postPoint_post")
+  user   user @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_postPoint_user1")
+
+  @@index([postId], map: "fk_postPoint_post_idx")
+  @@index([userId], map: "fk_postPoint_user1_idx")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model report {
+  postId Int
+  userId Int
+  text   String? @db.VarChar(1000)
+  post   post    @relation(fields: [postId], references: [postId], onDelete: NoAction, onUpdate: NoAction, map: "fk_report_post1")
+  user   user    @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_report_user1")
+
+  @@index([postId], map: "fk_report_post1_idx")
+  @@index([userId], map: "fk_report_user1_idx")
+  @@ignore
 }
 
 model role {
@@ -87,7 +155,7 @@ model tag {
   tagId    Int     @id @default(autoincrement())
   threadId Int
   name     String? @db.VarChar(45)
-  thread   thread  @relation(fields: [threadId], references: [threadId], onDelete: Cascade, onUpdate: Cascade, map: "fk_tag_thread1")
+  thread   thread  @relation(fields: [threadId], references: [threadId], onDelete: NoAction, onUpdate: NoAction, map: "fk_tag_thread1")
 
   @@index([threadId], map: "fk_tag_thread1_idx")
 }
@@ -97,7 +165,7 @@ model thread {
   title     String?  @db.VarChar(255)
   createdAt DateTime @db.DateTime(0)
   userId    Int
-  user      user     @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_thread_user1")
+  user      user     @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_thread_user1")
   post      post[]
   tag       tag[]
 
@@ -105,12 +173,13 @@ model thread {
 }
 
 model university {
-  universityId Int     @id @default(autoincrement())
-  name         String? @db.VarChar(255)
-  acronym      String? @db.VarChar(10)
-  province     String? @db.VarChar(255)
-  country      String? @db.VarChar(255)
+  universityId Int      @id @default(autoincrement())
+  name         String?  @db.VarChar(255)
+  acronym      String?  @db.VarChar(10)
+  province     String?  @db.VarChar(255)
+  country      String?  @db.VarChar(255)
   user         user[]
+  course       course[]
 }
 
 model user {
@@ -126,16 +195,20 @@ model user {
   verify                           String         @db.VarChar(5)
   kycVerify                        String         @db.VarChar(5)
   roleName                         String         @db.VarChar(45)
-  role                             role           @relation(fields: [roleName], references: [name], onDelete: Cascade, onUpdate: Cascade, map: "fk_user_role1")
-  university                       university?    @relation(fields: [universityId], references: [universityId], onDelete: Cascade, onUpdate: Cascade, map: "fk_user_university")
+  role                             role           @relation(fields: [roleName], references: [name], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_role1")
+  university                       university?    @relation(fields: [universityId], references: [universityId], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_university")
+  comments                         comments[]     @ignore
   course                           course[]
   kyc                              kyc[]
   message_message_receiverIdTouser message[]      @relation("message_receiverIdTouser")
   message_message_senderIdTouser   message[]      @relation("message_senderIdTouser")
   post                             post[]
+  postpoint                        postpoint[]    @ignore
+  report                           report[]       @ignore
   thread                           thread[]
   verification                     verification[]
 
+  coursepoint coursepoint[] @ignore
   @@index([roleName], map: "fk_user_role1_idx")
   @@index([universityId], map: "fk_user_university_idx")
 }
@@ -145,7 +218,7 @@ model verification {
   token          String   @db.VarChar(255)
   createdAt      DateTime @db.DateTime(0)
   userId         Int
-  user           user     @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "fk_verification_user1")
+  user           user     @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "fk_verification_user1")
 
   @@index([userId], map: "fk_verification_user1_idx")
 }
