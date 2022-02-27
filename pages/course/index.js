@@ -3,7 +3,7 @@ import Navbar from "../../layouts/Navbar";
 import Select from "../../components/util/Select";
 import Card from "../../components/util/Card";
 
-export default function index() {
+export default function Index() {
   const universityList = [
     {
       id: 1,
@@ -63,6 +63,7 @@ export default function index() {
 
   const courses = [
     {
+      courseId: 1,
       name: "Calculus 1",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum corrupti nesciunt similique culpa repudiandae, perferendis non qui nihil ut voluptatem recusandae vel deleniti sint voluptas praesentium odio ad placeat.",
@@ -72,6 +73,7 @@ export default function index() {
       point: 3,
     },
     {
+      courseId: 2,
       name: "Calculus 2",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum corrupti nesciunt similique culpa repudiandae, perferendis non qui nihil ut voluptatem recusandae vel deleniti sint voluptas praesentium odio ad placeat.",
@@ -81,6 +83,7 @@ export default function index() {
       point: 4,
     },
     {
+      courseId: 3,
       name: "Physics 1",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum corrupti nesciunt similique culpa repudiandae, perferendis non qui nihil ut voluptatem recusandae vel deleniti sint voluptas praesentium odio ad placeat.",
@@ -90,6 +93,7 @@ export default function index() {
       point: 2,
     },
     {
+      courseId: 4,
       name: "Computer Programming 1",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum corrupti nesciunt similique culpa repudiandae, perferendis non qui nihil ut voluptatem recusandae vel deleniti sint voluptas praesentium odio ad placeat.",
@@ -99,6 +103,7 @@ export default function index() {
       point: 5,
     },
     {
+      courseId: 5,
       name: "Biology 1",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum corrupti nesciunt similique culpa repudiandae, perferendis non qui nihil ut voluptatem recusandae vel deleniti sint voluptas praesentium odio ad placeat.",
@@ -137,10 +142,10 @@ export default function index() {
             </div>
           </div>
           {/* Result div */}
-          <div class="container mx-auto">
-            <div class="flex flex-wrap -mx-4">
+          <div className="container mx-auto">
+            <div className="flex flex-wrap -mx-4">
               {courses.map((course) => (
-                <Card prop={course} />
+                <Card key={course.courseId} prop={course} />
               ))}
             </div>
           </div>
