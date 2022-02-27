@@ -29,6 +29,7 @@ export default function Card({ prop }) {
           <span className="flex items-center mb-1">
             {prop.category ? prop.category : "No Category"} | {prop.university ? prop.university : "No University"}
           </span>
+          <div>Instructor: {prop.instructor ? prop.instructor : "No Instructor"}</div>
         </div>
         <div className="px-4 pb-4 flex items-center text-sm text-gray-600">
           {Array.from(Array(prop.point), (e, i) => {

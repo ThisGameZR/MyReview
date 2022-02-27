@@ -69,6 +69,7 @@ export default function Index() {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum corrupti nesciunt similique culpa repudiandae, perferendis non qui nihil ut voluptatem recusandae vel deleniti sint voluptas praesentium odio ad placeat.",
       category: "Mathematics",
       university: "Chiang Mai University",
+      instructor: "God Chulin",
       date: new Date("2022-01-01"),
       point: 3,
     },
@@ -80,6 +81,7 @@ export default function Index() {
       date: new Date("2022-01-01"),
       category: "Mathematics",
       university: "Chiang Mai University",
+      instructor: "Doraemon",
       point: 4,
     },
     {
@@ -90,6 +92,7 @@ export default function Index() {
       date: new Date("2020-02-01"),
       category: "Science",
       university: "Chulalongkorn University",
+      instructor: "Doctor Strange",
       point: 2,
     },
     {
@@ -100,6 +103,7 @@ export default function Index() {
       date: new Date("2021-04-05"),
       category: "Computer Science",
       university: "Chulalongkorn University",
+      instructor: "Dr. Banner",
       point: 5,
     },
     {
@@ -110,6 +114,7 @@ export default function Index() {
       date: new Date("2021-04-05"),
       category: "Science",
       university: "Bangkok University",
+      instructor: "Lion King",
       point: 4,
     },
   ];

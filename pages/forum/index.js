@@ -74,7 +74,7 @@ export default function Index() {
         <div className="flex flex-col w-full ">
           {/* Search div */}
           <div className="flex flex-row w-full py-2 bg-slate-50 border-b-black border-b border-solid justify-center">
-            <div className="w-full lg:w-[60%] flex flex-row">
+            <div className="px-4 w-full lg:w-[60%] flex flex-row">
               <div className="flex justify-center items-center bg-gray-300 px-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
